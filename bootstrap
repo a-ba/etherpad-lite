@@ -1,0 +1,23 @@
+#!/bin/sh
+
+(set -e
+
+# create a .env file that stores the uid and gid of the current user in the env
+# variable DOCKERUSER so that the container is run under the developer's uid
+# (see docker-compose.yml)
+if [ -f ".env" ] ; then
+	echo "WARNING: will not generate .env (the file already exists)"
+else
+	cat >".env" <<EOF
+DOCKERUSER=`id -u`:`id -g`
+EOF
+fi
+
+set -x
+
+# build the etherpad image
+docker-compose build
+
+)
+
+echo The environment is ready. Now you can run « docker compose up » to start the etherpad container and open http://localhost:9001/ in your web browser to test it.
