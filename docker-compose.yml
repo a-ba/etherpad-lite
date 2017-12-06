@@ -28,5 +28,12 @@ etherpad:
         #  /opt/etherpad/var otherwise)
         - ./var:/opt/etherpad/var
 
+    environment:
+        # set the HOME dir to a location in our external volume, so as to
+        # - cache the npm packages (~/.npm)
+        # - keep the bash history (and other state files useful for the
+        #   developer)
+        HOME: "/opt/etherpad/var/home"
+
 
 # vim:sts=4:sw=4:
